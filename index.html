@@ -12,8 +12,8 @@
       <a-entity id="anchor" position="0 0 -5">
         
         <a-image id="character" src="original2.png" width="2" height="2" transparent="true"
-          animation__bow="property: rotation; from: 0 0 0; to: 40 0 0; dur: 1000; startEvents: startBow; dir: alternate; loop: 2"
-          animation__jump="property: position; from: 0 0 0; to: 0 0.5 0; dur: 300; startEvents: startJump; dir: alternate; loop: 4">
+          animation__bow="property: rotation; from: 0 0 0; to: 40 0 0; dur: 2000; startEvents: startBow; dir: alternate; loop: 2"
+          animation__jump="property: position; from: 0 0 0; to: 0 0.5 0; dur: 600; startEvents: startJump; dir: alternate; loop: 4">
         </a-image>
 
         <a-text id="msg" value="" align="center" position="0 1.5 0" scale="2 2 2" color="#FFFFFF"
@@ -27,18 +27,19 @@
       const char = document.querySelector('#character');
       const msg = document.querySelector('#msg');
 
-      // ページを読み込んで3秒後に演出スタート
       window.onload = () => {
+        // ページ読み込み3秒後にスタート
         setTimeout(() => {
-          // 1. お辞儀演出
-          msg.setAttribute('value', '어서 오세요!'); // ようこそ！
+          // 1. お辞儀開始に合わせて「ようこそ」を表示
+          msg.setAttribute('value', '어서 오세요'); // ようこそ
           char.emit('startBow');
           
+          // お辞儀が終わるタイミング（4秒後）に次のメッセージへ
           setTimeout(() => {
-            // 2. 歓迎（バウンド）演出
-            msg.setAttribute('value', '환영합니다!'); // 歓迎します！
+            // 2. バウンド開始に合わせて「歓迎します」を表示
+            msg.setAttribute('value', '환영합니다'); // 歓迎します
             char.emit('startJump');
-          }, 2500);
+          }, 4500); // お辞儀の余韻を含めて4.5秒に設定
         }, 3000);
       };
     </script>
