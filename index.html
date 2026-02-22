@@ -16,12 +16,7 @@
           animation__jump="property: position; from: 0 0 0; to: 0 0.5 0; dur: 600; startEvents: startJump; dir: alternate; loop: 4">
         </a-image>
 
-        <a-entity position="0 1.8 0.1">
-          <a-plane id="text-bg" color="#000000" opacity="0.5" width="2.5" height="0.6" visible="false"></a-plane>
-          <a-text id="msg" value="" align="center" width="6" color="#FFFFFF"
-                  font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/notosansjp/NotoSansJP-Bold.json"
-                  shader="msdf"></a-text>
-        </a-entity>
+        <a-image id="msg-img" position="0 1.8 0.1" width="2.5" height="1.2" transparent="true" visible="false"></a-image>
 
       </a-entity>
 
@@ -30,21 +25,21 @@
 
     <script>
       const char = document.querySelector('#character');
-      const msg = document.querySelector('#msg');
-      const bg = document.querySelector('#text-bg');
+      const msgImg = document.querySelector('#msg-img');
 
       window.onload = () => {
+        // ページ読み込み3秒後に演出スタート
         setTimeout(() => {
-          // 1. お辞儀開始に合わせて表示
-          bg.setAttribute('visible', 'true');
-          msg.setAttribute('value', '어서 오세요'); // ようこそ
+          // 1. お辞儀開始と同時に「youkoso.png」を表示
+          msgImg.setAttribute('src', 'youkoso.png');
+          msgImg.setAttribute('visible', 'true');
           char.emit('startBow');
           
           setTimeout(() => {
-            // 2. バウンド開始に合わせて表示
-            msg.setAttribute('value', '환영합니다'); // 歓迎します
+            // 2. バウンド開始と同時に「kangei.png」に切り替え
+            msgImg.setAttribute('src', 'kangei.png');
             char.emit('startJump');
-          }, 4500);
+          }, 4500); // お辞儀が終わるのを待ってから切り替え
         }, 3000);
       };
     </script>
