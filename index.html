@@ -16,8 +16,13 @@
           animation__jump="property: position; from: 0 0 0; to: 0 0.5 0; dur: 600; startEvents: startJump; dir: alternate; loop: 4">
         </a-image>
 
-        <a-text id="msg" value="" align="center" position="0 1.5 0" scale="2 2 2" color="#FFFFFF"
-                font="https://cdn.aframe.io/fonts/NotoSansCJKjp-msdf.json" negate="false"></a-text>
+        <a-entity position="0 1.8 0.1">
+          <a-plane id="text-bg" color="#000000" opacity="0.5" width="2.5" height="0.6" visible="false"></a-plane>
+          <a-text id="msg" value="" align="center" width="6" color="#FFFFFF"
+                  font="https://raw.githubusercontent.com/etiennepinchon/aframe-fonts/master/fonts/notosansjp/NotoSansJP-Bold.json"
+                  shader="msdf"></a-text>
+        </a-entity>
+
       </a-entity>
 
       <a-entity camera></a-entity>
@@ -26,20 +31,20 @@
     <script>
       const char = document.querySelector('#character');
       const msg = document.querySelector('#msg');
+      const bg = document.querySelector('#text-bg');
 
       window.onload = () => {
-        // ページ読み込み3秒後にスタート
         setTimeout(() => {
-          // 1. お辞儀開始に合わせて「ようこそ」を表示
+          // 1. お辞儀開始に合わせて表示
+          bg.setAttribute('visible', 'true');
           msg.setAttribute('value', '어서 오세요'); // ようこそ
           char.emit('startBow');
           
-          // お辞儀が終わるタイミング（4秒後）に次のメッセージへ
           setTimeout(() => {
-            // 2. バウンド開始に合わせて「歓迎します」を表示
+            // 2. バウンド開始に合わせて表示
             msg.setAttribute('value', '환영합니다'); // 歓迎します
             char.emit('startJump');
-          }, 4500); // お辞儀の余韻を含めて4.5秒に設定
+          }, 4500);
         }, 3000);
       };
     </script>
